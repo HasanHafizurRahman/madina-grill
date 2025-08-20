@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Madina Grill — Home</title>
+  <meta name="theme-color" content="#F05323">
+
+  <!-- Tailwind Play CDN + small config (custom colors) -->
+  <script>
+    tailwind = window.tailwind || {};
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff6f2',
+              100: '#ffe8db',
+              300: '#ffb08a',
+              500: '#F05323',
+              700: '#b63b14',
+              900: '#3e1608'
+            },
+            neutral: {
+              50: '#fafafa',
+              100: '#f4f4f4',
+              300: '#e6e6e6',
+              500: '#6b7280',
+              700: '#111827'
+            },
+            bw: {
+              black: '#000000',
+              white: '#ffffff'
+            }
+          },
+          fontFamily: {
+            display: ['"Poppins"', 'system-ui', 'sans-serif'],
+            body: ['"Inter"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    /* subtle ribbon effect for headings */
+    .ribbon {
+      position: relative;
+      display: inline-block;
+      padding: .4rem 1.1rem;
+      font-weight:700;
+    }
+    .ribbon::before, .ribbon::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 8px;
+      width: 18px;
+      background: rgba(0,0,0,.06);
+      border-radius: 2px;
+    }
+    .ribbon::before { left: -14px; }
+    .ribbon::after { right: -14px; }
+
+    /* Animated mobile menu (smooth open) */
+    #mobileMenu { 
+      overflow: hidden;
+      transition: max-height 300ms ease;
+      max-height: 0;
+    }
+    #mobileMenu.open { max-height: 400px; } /* enough for items */
+    /* focus ring for accessibility */
+    .focus-ring:focus { outline: 3px solid rgba(240,83,35,0.18); outline-offset: 3px; }
+  </style>
+</head>
+<body class="bg-brand-50 text-neutral-700 font-body antialiased">
+
+  <!-- TOP INFO BAR -->
+  <div class="bg-white/90 border-b shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-sm py-2">
+      <div class="flex items-center gap-4 text-neutral-500">
+        <span class="hidden sm:inline">Madina Grill — Fresh from the grill</span>
+        <span>Open daily • 11:30 AM — 10:30 PM</span>
+      </div>
+      <div class="flex items-center gap-3 text-neutral-500">
+        <a href="#" class="hover:text-brand-500">Facebook</a>
+        <a href="#" class="hover:text-brand-500">Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="bg-white/80 sticky top-0 z-30 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo (replace path below with your logo file) -->
+        <a href="#" class="flex items-center gap-3" aria-label="Madina Grill home">
+          <!-- Put your logo at /assets/logo.svg (see notes below). If not available, text fallback shows. -->
+          <img src="/assets/logo.png" alt="Madina Grill logo" class="w-12 h-12 object-contain hidden sm:block" onerror="this.style.display='none'">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white font-display text-lg shadow sm:hidden">MG</div>
+          <div>
+            <h1 class="text-lg font-display leading-none">Madina Grill</h1>
+            <p class="text-xs text-neutral-500 -mt-0.5">Gourmet Burgers & Grill</p>
+          </div>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium" aria-label="Primary">
+          <a href="#about" class="hover:text-brand-500 focus-ring">About</a>
+          <a href="/menu" class="text-brand-500 font-semibold focus-ring">Menu</a>
+          <a href="#gallery" class="hover:text-brand-500 focus-ring">Gallery</a>
+          <a href="#contact" class="hover:text-brand-500 focus-ring">Contact</a>
+        </nav>
+
+        <!-- Buttons -->
+        <div class="hidden md:flex items-center gap-4">
+          <a href="/menu" class="inline-flex items-center px-4 py-2 rounded-md bg-brand-500 hover:text-brand-500 text-sm shadow hover:brightness-95 focus-ring">View Menu</a>
+        </div>
+
+        <!-- mobile menu button -->
+        <div class="md:hidden">
+          <button id="navToggle" aria-label="Toggle navigation" aria-expanded="false" class="p-2 rounded-md text-neutral-700 hover:bg-neutral-100 focus-ring">
+            <svg id="hamburger" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- mobile menu (collapsible) -->
+    <div id="mobileMenu" class="md:hidden border-t bg-white/95">
+      <div class="px-4 py-3 space-y-2">
+        <a href="#about" class="block px-3 py-2 rounded hover:bg-neutral-50">About</a>
+        <a href="/menu" class="block px-3 py-2 rounded hover:bg-neutral-50">Menu</a>
+        <a href="#gallery" class="block px-3 py-2 rounded hover:bg-neutral-50">Gallery</a>
+        <a href="#contact" class="block px-3 py-2 rounded hover:bg-neutral-50">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-14">
+        <div class="space-y-6">
+          <h2 class="text-4xl sm:text-5xl font-display leading-tight">Madina Grill — Handmade<br><span class="text-brand-500">Gourmet Burgers</span></h2>
+          <p class="text-neutral-600 max-w-xl">Fresh, flame-grilled patties, soft artisan buns and house-made sauces. Classic combos and seasonal specials — everything made with care.</p>
+          <div class="flex items-center gap-3">
+            <a href="/menu" class="inline-flex items-center gap-2 px-5 py-3 bg-brand-500 text-white rounded-md shadow font-medium focus-ring">See Menu</a>
+            <a href="#about" class="text-sm text-neutral-700 hover:underline focus-ring">Learn about us</a>
+          </div>
+
+          <!-- hero highlights -->
+          <div class="flex flex-wrap gap-4 mt-4">
+            <div class="flex items-center gap-3 bg-white rounded-lg p-3 shadow-sm">
+              <div class="w-10 h-10 rounded-full bg-brand-300 grid place-items-center text-brand-700 font-semibold">🔥</div>
+              <div>
+                <div class="text-sm font-semibold">Flame-grilled</div>
+                <div class="text-xs text-neutral-500">Perfect char & flavor</div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 bg-white rounded-lg p-3 shadow-sm">
+              <div class="w-10 h-10 rounded-full bg-brand-300 grid place-items-center text-brand-700 font-semibold">🌿</div>
+              <div>
+                <div class="text-sm font-semibold">Carefully sourced</div>
+                <div class="text-xs text-neutral-500">Local ingredients</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- hero image - responsive with <picture> and lazy loading -->
+        <div>
+          <div class="rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-white to-brand-100">
+            <picture>
+              <!-- the srcset below are examples; create matching files or keep single image at /images/hero-burger.jpg -->
+              <!-- <source srcset="/images/hero-burger-1600.jpg 1600w, /images/hero-burger-1024.jpg 1024w, /images/hero-burger-640.jpg 640w" sizes="(min-width:1024px) 480px, 100vw"> -->
+              <img src="/images/hero-burger.jpg" alt="Signature burger" class="w-full h-72 object-cover md:h-96" loading="lazy" decoding="async">
+            </picture>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE / SPECIAL -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-8">
+      <h3 class="text-xl ribbon bg-white inline-block px-6 py-2 rounded-md shadow-sm">Get your grills in a gourmet burger!</h3>
+      <p class="mt-4 text-neutral-600 max-w-2xl mx-auto">Our chef's specials change weekly — here's a highlight of what the town loves.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- card 1 -->
+      <article class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="h-44 bg-neutral-100">
+          <img src="/images/special-1.jpg" alt="Madina Classic" class="w-full h-full object-cover" loading="lazy" decoding="async">
+        </div>
+        <div class="p-5">
+          <h4 class="font-semibold text-lg">Madina Classic</h4>
+          <p class="text-sm text-neutral-500 mt-2">Beef patty, cheddar, lettuce, tomato, house sauce.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xl font-bold">£6.95</div>
+            <a href="/menu" class="text-sm font-medium text-brand-500">Order</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- card 2 -->
+      <article class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="h-44 bg-neutral-100">
+          <img src="/images/special-2.jpg" alt="Spiced Lamb Royale" class="w-full h-full object-cover" loading="lazy" decoding="async">
+        </div>
+        <div class="p-5">
+          <h4 class="font-semibold text-lg">Spiced Lamb Royale</h4>
+          <p class="text-sm text-neutral-500 mt-2">Seasoned lamb, tahini mayo, pickled onion.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xl font-bold">£8.50</div>
+            <a href="/menu" class="text-sm font-medium text-brand-500">Order</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- card 3 -->
+      <article class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="h-44 bg-neutral-100">
+          <img src="/images/special-3.jpg" alt="Green Garden Veggie" class="w-full h-full object-cover" loading="lazy" decoding="async">
+        </div>
+        <div class="p-5">
+          <h4 class="font-semibold text-lg">Green Garden (Veggie)</h4>
+          <p class="text-sm text-neutral-500 mt-2">Grilled veggie patty, harissa aioli, fresh leaves.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xl font-bold">£6.20</div>
+            <a href="/menu" class="text-sm font-medium text-brand-500">Order</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="bg-brand-100 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h3 class="text-2xl font-display">About Madina Grill</h3>
+        <p class="mt-4 text-neutral-700">Madina Grill began with a simple idea: to make burgers that feel like home. We use time-tested techniques, fresh produce and blends of spices that make each bite memorable. Pop in for a quick lunch, or settle down for a family meal.</p>
+
+        <ul class="mt-6 space-y-3 text-neutral-600">
+          <li class="flex items-start gap-3"><span class="mt-1">🍽️</span> Locally sourced ingredients</li>
+          <li class="flex items-start gap-3"><span class="mt-1">♨️</span> Flame-grilled to order</li>
+          <li class="flex items-start gap-3"><span class="mt-1">🚚</span> Click & collect / Delivery</li>
+        </ul>
+
+        <a href="/menu" class="inline-block mt-6 px-4 py-2 bg-white rounded-md shadow hover:shadow-md border text-sm">Full menu</a>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden shadow">
+        <img src="/images/about-inside.jpg" alt="Madina Grill interior" class="w-full h-80 object-cover" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-8">
+      <h3 class="text-2xl font-display">Gallery</h3>
+      <p class="mt-2 text-neutral-600 max-w-2xl mx-auto">Moments from our kitchen and customers' favorites. Tap to enlarge.</p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div class="rounded-lg overflow-hidden shadow-sm"><img src="/images/gallery-1.jpg" alt="" class="w-full h-28 object-cover" loading="lazy" decoding="async"></div>
+      <div class="rounded-lg overflow-hidden shadow-sm"><img src="/images/gallery-2.jpg" alt="" class="w-full h-28 object-cover" loading="lazy" decoding="async"></div>
+      <div class="rounded-lg overflow-hidden shadow-sm"><img src="/images/gallery-3.jpg" alt="" class="w-full h-28 object-cover" loading="lazy" decoding="async"></div>
+      <div class="rounded-lg overflow-hidden shadow-sm"><img src="/images/gallery-4.jpg" alt="" class="w-full h-28 object-cover" loading="lazy" decoding="async"></div>
+      <div class="rounded-lg overflow-hidden shadow-sm"><img src="/images/gallery-5.jpg" alt="" class="w-full h-28 object-cover" loading="lazy" decoding="async"></div>
+      <div class="rounded-lg overflow-hidden shadow-sm"><img src="/images/gallery-6.jpg" alt="" class="w-full h-28 object-cover" loading="lazy" decoding="async"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="bg-white/60 py-12 border-t">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h3 class="text-2xl font-display text-center">Contact & Location</h3>
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <!-- MAP -->
+        <div class="rounded-xl overflow-hidden shadow h-80">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d198570.81200000004!2d-0.3817846!3d51.5285582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b3333333333%3A0x0000000000000000!2sLondon%2C%20UK!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="w-full h-full"
+          ></iframe>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div class="bg-brand-50 rounded-xl p-6 shadow">
+          <h4 class="text-lg font-semibold">Madina Grill</h4>
+          <p class="mt-2 text-neutral-600">Civic Street, London, UK (placeholder)</p>
+
+          <div class="mt-4 space-y-3 text-neutral-700">
+            <div class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-500" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h8a2 2 0 012 2v.5h-1V5H4v10h9v-.5h1V15a2 2 0 01-2 2H4a2 2 0 01-2-2V5z"/><path d="M6 8h8v2H6z" /></svg>
+              <div>
+                <div class="text-xs text-neutral-500">Phone</div>
+                <div class="text-sm font-medium">+44 20 7946 0000</div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-500" viewBox="0 0 20 20" fill="currentColor"><path d="M2.94 6.94a8 8 0 1111.314 11.314 8 8 0 01-11.313-11.313zM10 12a2 2 0 100-4 2 2 0 000 4z"/></svg>
+              <div>
+                <div class="text-xs text-neutral-500">Email</div>
+                <div class="text-sm font-medium">hello@madinagrill.co.uk</div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-neutral-100">
+              <div class="text-xs text-neutral-500">Opening Hours</div>
+              <div class="mt-2 text-sm">Mon–Sun: 11:30 — 22:30</div>
+            </div>
+
+            <a href="#" class="inline-block mt-4 px-4 py-2 rounded-md bg-brand-500 text-white font-medium focus-ring">Book a Table</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-brand-900 text-white mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div>
+        <div class="text-xl font-display">Madina Grill</div>
+        <p class="text-brand-50 mt-2 text-sm">Good food, warm service — join us for classic grilled favorites.</p>
+      </div>
+
+      <div>
+        <div class="font-medium">Quick links</div>
+        <ul class="mt-3 space-y-2 text-sm text-brand-50">
+          <li><a href="/menu" class="hover:underline">Menu</a></li>
+          <li><a href="#gallery" class="hover:underline">Gallery</a></li>
+          <li><a href="#contact" class="hover:underline">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-medium">Address</div>
+        <div class="mt-2 text-sm text-brand-50">Civic Street, London, UK</div>
+      </div>
+    </div>
+
+    <div class="text-center text-xs text-brand-100 py-4 border-t border-brand-700">© <span id="year"></span> Madina Grill — All rights reserved</div>
+  </footer>
+
+  <!-- small scripts -->
+  <script>
+    // mobile nav toggle with aria support + smooth max-height transition
+    const navToggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    navToggle?.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
